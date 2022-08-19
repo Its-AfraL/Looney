@@ -32,7 +32,11 @@ with open('version.txt') as f:
     looney_version = lines.strip(' ')
     looney_version = looney_version.strip('\n')
  
- 
+def get_desktop():
+    
+    desktop = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
+    return desktop
+    
 def get_path():
     # Simple function which return looney path
     path = os.getcwd()
@@ -73,12 +77,15 @@ def get_version():
 def clean_update():
     # This function auto-delete the auto_destruct batch file which delete olds Looney version
     try:
-        os.system('rmdir /Q /S %USERPROFILE%\Desktop\auto-destruct.bat > nul')
+        os.system('del /Q /S %USERPROFILE%\Desktop\auto-destruct.bat > nul')
+        os.system('rmdir /Q /S %USERPROFILE%\Desktop\Looney v1.3 > nul')
     except:
         pass
     
     
 def auto_update_looney():
+    
+    desktop = get_desktop()
     
     os.system("cls")
     os.system("title AfraL © 2022  x  Looney ^| v1.3")
@@ -120,16 +127,19 @@ def auto_update_looney():
         
         path = get_path()
         
-        os.system('echo @echo off > %USERPROFILE%\Desktop\auto-destruct.bat')
-        os.system(f'TIMEOUT /T 3 /NOBREAK & rmdir /Q /S "{path}" >> %USERPROFILE%\Desktop\auto-destruct.bat')
+        print(desktop)
         
+        auto_destruct_file = open(r'Path to store the new batch file\File name.bat','w+')
+        auto_destruct_file(f"@echo off\nTIMEOUT /T 3 /NOBREAK & rmdir /Q /S \"{path}")
+        auto_destruct_file.close()
+       
         countdown(t=5)
         
-        os.system('start %USERPROFILE%\Desktop\auto-destruct.bat')
+        auto_destruct_file_path = desktop + "\\auto-destruct.bat"
+        
+        p = subprocess.Popen(auto_destruct_file_path, creationflags=subprocess.CREATE_NEW_CONSOLE)
         exit()
         
-        
-
 global choice
 
 
