@@ -1,4 +1,4 @@
-# Current Looney version : v1.3
+# Current Looney version : v1.4
 
 # </> The world is our
 
