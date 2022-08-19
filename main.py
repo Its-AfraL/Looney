@@ -13,6 +13,9 @@
 # All premade script are created by us, you can find them in the source folder
 # Source folder : src/
 
+import requests
+import sys
+import subprocess
 from src.headers import generate_header
 from pyfade import Fade, Colors
 from src.list_gen import generate_num_list
@@ -24,20 +27,68 @@ import random
 import string
 import AutoUpdate
 
-looney_version = "1.3"
+with open('version.txt') as f:
+    lines = f.read()
+    looney_version = lines.strip(' ')
+    looney_version = looney_version.strip('\n')
+ 
+ 
+def get_path():
+    # Simple function which return looney path
+    path = os.getcwd()
+    return path
+    
+    
+# define the countdown func
+def countdown(t):
+    
+    t = int(t)
+    while t:
+        mins, secs = divmod(t, 60)
+        timer = '{:02d}:{:02d}'.format(mins, secs)
+        print(timer, end="\r")
+        time.sleep(1)
+        t -= 1
+   
 
+def check_update():
+    
+    version = get_version()
+    
+    if version == looney_version:
+        return True
+        
+    else:
+        return False
+    
+def get_version():
+
+    response = requests.get("https://raw.githubusercontent.com/Its-AfraL/Looney/main/version.txt")
+    version = response.text
+    version = version.strip('\n')
+    version = version.strip(' ')
+
+    return version
+
+def clean_update():
+    # This function auto-delete the auto_destruct batch file which delete olds Looney version
+    try:
+        os.system('rmdir /Q /S %USERPROFILE%\Desktop\auto-destruct.bat > nul')
+    except:
+        pass
+    
+    
 def auto_update_looney():
     
     os.system("cls")
     os.system("title AfraL © 2022  x  Looney ^| v1.3")
     print(Fade.Vertical(Colors.black_to_white, generate_header()))
+    time.sleep(1)
+    print(f'\n\n[*] Actual Looney version : v{looney_version} checking for Looney new updates...')
     
-    print(f'\n[*]Actual Looney version : v{looney_version} checking for Looney new updates...')
+    up_to_date = check_update()
     
-    AutoUpdate.set_url("https://raw.githubusercontent.com/Its-AfraL/looney_version/main/version.txt?token=GHSAT0AAAAAABXZA6HCGXBEJUMRUWNA7I2SYX6JRGA")
-    AutoUpdate.set_current_version(str(looney_version))
-
-    up_to_date = AutoUpdate.is_up_to_date()
+    version = get_version()
     
     if up_to_date == True:
         print("[+] Looney is up to date !") 
@@ -45,12 +96,38 @@ def auto_update_looney():
         print("\n[*] Starting the script...")
         time.sleep(2)
         interface()
-    
-    else if up_to_date == False:
-        print("[-] A new version of Looney has been uploaded")
-        print("[*] Looney will auto-update..."\)
+   
+    elif up_to_date == False:
+        print(f"[-] A new version of Looney has been uploaded : {version}")
+        print("[*] Looney will auto-update...\n")
+        print("\n")
         
-	
+        version = get_version()
+
+        try:
+            os.system(f"git clone https://github.com/Its-AfraL/Looney.git \"Looney v{version}\"")
+            
+        except:
+            print("\n[-] Can't update the script, make sure git is installed !\n")
+            os.system('pause')
+            
+            choice()
+            
+        print("\n[+] Successfully updated, the old version will be autodestructed in ")
+        
+        # Creating an auto-destruct batch file on Desktop
+        # This batch script is destructed by clean_update() function on all looney version
+        
+        path = get_path()
+        
+        os.system('echo @echo off > %USERPROFILE%\Desktop\auto-destruct.bat')
+        os.system(f'rmdir /Q /S "{path}" >> %USERPROFILE%\Desktop\auto-destruct.bat')
+        
+        countdown(t=5)
+        
+        os.system('start %USERPROFILE%\Desktop\auto-destruct.bat')
+        
+        
 
 global choice
 
@@ -76,7 +153,7 @@ def interface():
         choice = int(choice)
         print(choice)
     except:
-        interface()
+        choice()
 
     return choice
 
@@ -226,5 +303,5 @@ def choice():
     else:
         interface()
 
-
-choice()
+clean_update()
+auto_update_looney()
