@@ -81,8 +81,8 @@ def clean_update():
     auto_destruct_file_path = desktop + "\\auto_destruct.bat"
     
     try:
-        os.system(auto_destruct_file_path)
-        os.system('pause')
+        os.system(auto_destruct_file_path + " > nul 2>&1")
+        #os.system('pause')
     except:
         pass
     
