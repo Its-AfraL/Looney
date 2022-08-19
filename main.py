@@ -115,7 +115,7 @@ def auto_update_looney():
         version = get_version()
 
         try:
-            os.system(f"git clone https://github.com/Its-AfraL/Looney.git {desktop}\\"Looney v{version}\"")
+            os.system(f"git clone https://github.com/Its-AfraL/Looney.git \"{desktop}\\Looney v{version}\"")
             
         except:
             print("\n[-] Can't update the script, make sure git is installed !\n")
