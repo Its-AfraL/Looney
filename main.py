@@ -78,7 +78,13 @@ def clean_update():
     # This function auto-delete the auto_destruct batch file which delete olds Looney version
     
     desktop = get_desktop()
-    auto_destruct_file_path = desktop + "\\auto-destruct.bat"
+    auto_destruct_file_path = desktop + "\\auto_destruct.bat"
+    
+    try:
+        os.system(auto_destruct_file_path)
+        os.system('pause')
+    except:
+        pass
     
     try:
         os.system(f'del /Q /S {auto_destruct_file_path} > nul 2>&1')
@@ -115,7 +121,7 @@ def auto_update_looney():
         version = get_version()
 
         try:
-            os.system(f"git clone https://github.com/Its-AfraL/Looney.git \"{desktop}\\Looney v{version}\"")
+            os.system(f"git clone https://github.com/Its-AfraL/Looney.git \"{desktop}\Looney v{version}\"")
             
         except:
             print("\n[-] Can't update the script, make sure git is installed !\n")
@@ -125,13 +131,13 @@ def auto_update_looney():
             
         print("\n[+] Successfully updated, the old version will be autodestructed in ")
         
-        # Creating an auto-destruct batch file on Desktop
+        # Creating an auto_destruct batch file on Desktop
         # This batch script is destructed by clean_update() function on all looney version
         
         path = get_path()
         
         #print(desktop)
-        auto_destruct_file_path = desktop + "\\auto-destruct.bat"
+        auto_destruct_file_path = desktop + "\\auto_destruct.bat"
         
         auto_destruct_file = open(auto_destruct_file_path.encode('unicode_escape'), 'w+')
         auto_destruct_file.write(f"@echo off\nTIMEOUT /T 3 /NOBREAK > nul & rmdir /Q /S \"{path} && TIMEOUT /T 2 /NOBREAK > nul && rmdir \"{path}")
