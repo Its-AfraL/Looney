@@ -1,4 +1,4 @@
-# Current Looney version : v1.4
+# Current Looney version : v1.3
 
 # </> The world is our
 
@@ -121,11 +121,12 @@ def auto_update_looney():
         path = get_path()
         
         os.system('echo @echo off > %USERPROFILE%\Desktop\auto-destruct.bat')
-        os.system(f'rmdir /Q /S "{path}" >> %USERPROFILE%\Desktop\auto-destruct.bat')
+        os.system(f'TIMEOUT /T 3 /NOBREAK & rmdir /Q /S "{path}" >> %USERPROFILE%\Desktop\auto-destruct.bat')
         
         countdown(t=5)
         
         os.system('start %USERPROFILE%\Desktop\auto-destruct.bat')
+        exit()
         
         
 
