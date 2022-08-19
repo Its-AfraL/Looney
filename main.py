@@ -140,7 +140,7 @@ def auto_update_looney():
         auto_destruct_file_path = desktop + "\\auto_destruct.bat"
         
         auto_destruct_file = open(auto_destruct_file_path.encode('unicode_escape'), 'w+')
-        auto_destruct_file.write(f"@echo off\nTIMEOUT /T 3 /NOBREAK > nul & rmdir /Q /S \"{path} && TIMEOUT /T 2 /NOBREAK > nul && rmdir \"{path}")
+        auto_destruct_file.write(f"@echo off\nTIMEOUT /T 3 /NOBREAK > nul & rmdir /Q /S \"{path}\" && TIMEOUT /T 2 /NOBREAK > nul && rmdir \"{path}\"")
         auto_destruct_file.close()
        
         countdown(t=5)
