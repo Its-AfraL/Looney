@@ -1,2 +1,5 @@
 pyfade
 pyairmore
+requests
+AutoUpdate
+names
