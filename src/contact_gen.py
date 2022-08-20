@@ -8,6 +8,7 @@
 import os
 import string
 import random
+import names
 
 def generate_random_strings(chars):
     #try:
@@ -19,9 +20,8 @@ def generate_random_strings(chars):
         #os.system('exit')
     
     return random_string
-    
-    
-def contact_generator(list, output):
+       
+def contact_generator(list, output, name):
     # Open the plain text file and load all content into memory
     linestring = open(list, 'r').read()
     lines = linestring.split('\n')
@@ -42,7 +42,15 @@ END:VCARD
     i = 0
     while i < len(lines):
         #print( "linea ", i)
-        nome = generate_random_strings(chars=int(10))
+        
+        #print(name)
+        
+        if name == "fake":
+            nome = str(names.get_full_name())
+            
+        else:
+            nome = generate_random_strings(chars=int(10))
+            
         contact = fmt.replace('%NOME_COGNOME%', nome)
 
         nome = lines[i]
