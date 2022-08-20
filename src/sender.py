@@ -54,7 +54,7 @@ def message_send(def_ip, message, list_path):
         ).split(".")[0]
 
         os.system(
-            f"title AfraL © 2022  x  Looney ^| {message_sent}/{num_number} ^| Errors : {erreurs} ^| Elapsed Time: {curr_time} ^| v1.3"
+            f"title AfraL © 2022  x  Looney ^| {message_sent}/{num_number} ^| Errors : {erreurs} ^| Elapsed Time: {curr_time} ^| v1.5"
             if os.name == "nt"
             else ""
         )
