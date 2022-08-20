@@ -1,4 +1,4 @@
-# Current Looney version : v1.3
+# Current Looney version : v1.5
 
 # </> The world is our
 
@@ -97,7 +97,7 @@ def auto_update_looney():
     desktop = get_desktop()
     
     os.system("cls")
-    os.system("title AfraL © 2022  x  Looney ^| v1.3")
+    os.system("title AfraL © 2022  x  Looney ^| v1.5")
     print(Fade.Vertical(Colors.black_to_white, generate_header()))
     time.sleep(1)
     print(f'\n\n[*] Actual Looney version : v{looney_version} checking for Looney new updates...')
@@ -155,7 +155,7 @@ def interface():
     # Printing the banner
 
     os.system("cls")
-    os.system("title AfraL © 2022  x  Looney ^| v1.3")
+    os.system("title AfraL © 2022  x  Looney ^| v1.5")
     print(Fade.Vertical(Colors.black_to_white, generate_header()))
 
     # Printing differents choice
@@ -166,15 +166,15 @@ def interface():
     print("3 > Generate a .vcf contacts file ")
     print("\n4 > Tutorial ")
 
-    choice = input("\n>>> ")
+    choice_number = input("\n>>> ")
 
     try:
-        choice = int(choice)
-        print(choice)
+        choice_number = int(choice_number)
+        #print(choice)
     except:
         choice()
 
-    return choice
+    return choice_number
 
 
 def sms_num():
@@ -293,9 +293,18 @@ def contact_gen():
         contact_gen()
 
     raw_list_name = str(input("Please enter below list name >>> "))
+    print('\n')
     def_list_name = "output\contacts\\" + raw_list_name
-
-    contact_generator(list=path_list, output=def_list_name)
+    name_or_not = "Default"
+    
+    while name_or_not.lower() not in ('f','r'):
+        name_or_not = input('Do you want to use fake names or random names (f/r) >>> ')
+        
+    if str(name_or_not) == "f":
+        contact_generator(list=path_list, output=def_list_name, name="fake")
+        
+    else:
+        contact_generator(list=path_list, output=def_list_name, name="random")
 
     #print(raw_list_name)
     print(f"\n>>> List generated in output/contacts/{raw_list_name}.vcf")
@@ -305,18 +314,18 @@ def contact_gen():
 
 
 def choice():
-    choice = interface()
+    choice_number = interface()
 
-    if choice == 1:
+    if choice_number == 1:
         generate_list()
 
-    elif choice == 2:
+    elif choice_number == 2:
         sms_num()
 
-    elif choice == 4:
+    elif choice_number == 4:
         tutorial()
 
-    elif choice == 3:
+    elif choice_number == 3:
         contact_gen()
 
     else:
